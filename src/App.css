@@ -61,3 +61,21 @@
 .error {
   color: #ff6b6b;
 }
+
+.search-input {
+  display: block;
+  width: 100%;
+  max-width: 480px;
+  margin: 0 auto 28px;
+  padding: 12px 16px;
+  font-size: 16px;
+  color: #f1f1f1;
+  background: #1f1f1f;
+  border: 1px solid #444;
+  border-radius: 8px;
+  outline: none;
+}
+
+.search-input:focus {
+  border-color: #888;
+}
