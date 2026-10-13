@@ -258,3 +258,54 @@ a.movie-card:hover {
   border: 0;
   border-radius: 8px;
 }
+
+.movie-card-wrapper {
+  position: relative;
+}
+
+.fav-btn {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  width: 36px;
+  height: 36px;
+  font-size: 18px;
+  line-height: 1;
+  background: rgba(0, 0, 0, 0.65);
+  border: none;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+.fav-btn:hover {
+  background: rgba(0, 0, 0, 0.85);
+}
+
+.top-nav {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.top-nav a {
+  color: #ccc;
+  text-decoration: none;
+}
+
+.top-nav a:hover {
+  color: #fff;
+}
+
+.fav-detail-btn {
+  margin-top: 20px;
+  padding: 10px 20px;
+  font-size: 15px;
+  color: #f1f1f1;
+  background: #333;
+  border: 1px solid #555;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.fav-detail-btn:hover {
+  background: #444;
+}

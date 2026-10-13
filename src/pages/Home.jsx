@@ -1,9 +1,10 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import MovieCard from "../components/MovieCard";
+import { useFavorites } from "../context/favoritesContext";
 
 const API_KEY = import.meta.env.VITE_TMDB_API_KEY;
 const BASE_URL = "https://api.themoviedb.org/3";
-const IMG_URL = "https://image.tmdb.org/t/p/w500";
 
 function Home() {
   const [query, setQuery] = useState("");
@@ -15,6 +16,7 @@ function Home() {
   const [totalPages, setTotalPages] = useState(1);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const { favorites } = useFavorites();
 
   // Debounce kata kunci; hasil pencarian baru selalu mulai dari halaman 1
   useEffect(() => {
@@ -98,6 +100,9 @@ function Home() {
   return (
     <div className="app">
       <h1>Movie Finder</h1>
+      <nav className="top-nav">
+        <Link to="/favorites">❤️ Favorit ({favorites.length})</Link>
+      </nav>
 
       <div className="controls">
         <input
@@ -138,21 +143,7 @@ function Home() {
       {movies.length > 0 && (
         <div className="movie-grid">
           {movies.map((movie) => (
-            <Link
-  className="movie-card"
-  to={`/movie/${movie.id}`}
-  key={movie.id}
->
-  {movie.poster_path ? (
-    <img src={`${IMG_URL}${movie.poster_path}`} alt={movie.title} />
-  ) : (
-    <div className="no-poster">Tidak ada poster</div>
-  )}
-  <div className="movie-info">
-    <h3>{movie.title}</h3>
-    <p>⭐ {movie.vote_average.toFixed(1)}</p>
-  </div>
-</Link>
+            <MovieCard key={movie.id} movie={movie} />
           ))}
         </div>
       )}

@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
+import { useFavorites } from "../context/favoritesContext";
 
 const API_KEY = import.meta.env.VITE_TMDB_API_KEY;
 const BASE_URL = "https://api.themoviedb.org/3";
@@ -18,6 +19,7 @@ function MovieDetail() {
   const [movie, setMovie] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const { isFavorite, toggleFavorite } = useFavorites();
 
   useEffect(() => {
     let ignore = false;
@@ -103,6 +105,12 @@ function MovieDetail() {
               <span key={g.id}>{g.name}</span>
             ))}
           </div>
+          <button 
+            className="fav-detail-btn"
+            onClick={() => toggleFavorite(movie)}
+          >
+            {isFavorite(movie.id) ? "❤️ Hapus dari favorit" : "🤍 Tambah ke favorit"}
+          </button>
 
           <h3>Sinopsis</h3>
           <p className="overview">
