@@ -413,3 +413,28 @@ a.movie-card:hover {
     font-size: 24px;
   }
 }
+
+.site-footer {
+  max-width: 1200px;
+  margin: 40px auto 0;
+  padding: 24px 16px;
+  border-top: 1px solid #333;
+  text-align: center;
+  font-size: 13px;
+  color: #999;
+}
+
+.site-footer p {
+  margin: 4px 0;
+}
+
+.site-footer a {
+  color: #ccc;
+}
+
+.tmdb_logo {
+  display: block;
+  height: 28px;
+  width: auto;
+  margin: 0 auto 10px;
+}
