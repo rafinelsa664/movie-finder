@@ -143,14 +143,27 @@ a.movie-card:hover {
 }
 
 .back-link {
+  position: fixed;
+  top: 16px;
+  left: 16px;
+  z-index: 10;
   display: inline-block;
-  margin-bottom: 20px;
-  color: #ccc;
+  padding: 8px 14px;
+  color: #f1f1f1;
+  background: rgba(20, 20, 20, 0.85);
+  border: 1px solid #444;
+  border-radius: 8px;
   text-decoration: none;
 }
 
 .back-link:hover {
+  background: #333;
   color: #fff;
+}
+
+/* Beri ruang di atas isi halaman agar tidak tertutup tombol */
+.app:has(.back-link) {
+  padding-top: 72px;
 }
 
 .detail {
