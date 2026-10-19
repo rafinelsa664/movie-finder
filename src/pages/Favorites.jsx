@@ -6,7 +6,7 @@ function Favorites() {
   const { favorites } = useFavorites();
 
   return (
-    <div className="app">
+    <main className="app">
       <Link to="/" className="back-link">← Kembali</Link>
       <h1>Film Favorit</h1>
 
@@ -22,7 +22,7 @@ function Favorites() {
           ))}
         </div>
       )}
-    </div>
+    </main>
   );
 }
 

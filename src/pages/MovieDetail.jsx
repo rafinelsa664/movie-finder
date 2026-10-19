@@ -60,12 +60,12 @@ function MovieDetail() {
 
   if (error) {
     return (
-      <div className="app">
+      <main className="app">
         <p className="status error">{error}</p>
         <p className="status">
           <Link to={backTo} className="back-link">← Kembali ke daftar film</Link>
         </p>
-      </div>
+      </main>
     );
   }
 
@@ -77,7 +77,7 @@ function MovieDetail() {
   const runtime = formatRuntime(movie.runtime);
 
   return (
-    <div className="app">
+    <main className="app">
       <Link to={backTo} className="back-link">← Kembali</Link>
 
       <div className="detail">
@@ -155,7 +155,7 @@ function MovieDetail() {
           )}
         </div>
       </div>
-    </div>
+    </main>
   );
 }
 

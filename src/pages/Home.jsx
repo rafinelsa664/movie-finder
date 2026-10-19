@@ -137,7 +137,7 @@ function Home() {
   const showSkeleton = loading && movies.length === 0;
 
   return (
-    <div className="app">
+    <main className="app">
       <h1>Movie Finder</h1>
 
       <nav className="top-nav">
@@ -206,7 +206,7 @@ function Home() {
           {loading ? "Memuat..." : "Muat lebih banyak"}
         </button>
       )}
-    </div>
+    </main>
   );
 }
 

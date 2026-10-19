@@ -25,7 +25,7 @@ function MovieCard({ movie }) {
           <div className="no-poster">Tidak ada poster</div>
         )}
         <div className="movie-info">
-          <h3>{movie.title}</h3>
+          <h2>{movie.title}</h2>
           <p>⭐ {movie.vote_average.toFixed(1)}</p>
         </div>
       </Link>
