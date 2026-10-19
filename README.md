@@ -1,16 +1,50 @@
-# React + Vite
+# Movie Finder
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Aplikasi web untuk mencari dan menjelajahi film, dibuat dengan React sebagai
+proyek portofolio pribadi.
 
-Currently, two official plugins are available:
+**Demo:** https://movie-finder-sigma-eight.vercel.app/
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+## Fitur
 
-## React Compiler
+- Daftar film populer dengan tombol "Muat lebih banyak"
+- Pencarian film dengan debounce, jadi API tidak dipanggil di setiap ketikan
+- Filter berdasarkan genre
+- Halaman detail: sinopsis, durasi, genre, pemeran, dan trailer
+- Daftar film favorit yang tersimpan di localStorage
+- Kata kunci pencarian dan genre tersimpan di URL, jadi hasilnya bisa dibagikan lewat tautan
+- Tampilan responsif (HP, tablet, desktop), skeleton loading, serta penanganan loading dan error
+- Skor Lighthouse Accessibility 100
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## Teknologi
 
-## Expanding the ESLint configuration
+React, Vite, React Router, Context API, JavaScript, CSS, TMDB API
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+## Menjalankan di komputer sendiri
+
+1. Clone repo ini dan masuk ke foldernya:
+   `git clone https://github.com/rafinelsa664/movie-finder.git`
+2. Jalankan `npm install`
+3. Buat file `.env` di folder utama berisi:
+   `VITE_TMDB_API_KEY=api_key_tmdb_kamu`
+4. Jalankan `npm run dev`
+
+API key gratis bisa diminta di [themoviedb.org](https://www.themoviedb.org/).
+
+## Screenshot
+
+![Daftar film](docs/daftar_film.png)
+![Halaman detail](docs/detail_film.png)
+
+## Hal yang dipelajari
+
+- Mengelola state dan efek samping dengan hooks React
+- Membuat banyak halaman dengan React Router dan parameter URL
+- Berbagi state antar komponen dengan Context API
+- Menyimpan data di localStorage dan di URL
+- Dasar-dasar aksesibilitas dan tampilan responsif
+- Deploy aplikasi ke Vercel
+
+## Catatan
+
+This product uses the TMDB API but is not endorsed or certified by TMDB.
