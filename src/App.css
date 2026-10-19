@@ -451,3 +451,27 @@ a.movie-card:hover {
   width: auto;
   margin: 0 auto 10px;
 }
+
+/* Samakan tinggi semua kartu dalam satu baris */
+.movie-card-wrapper {
+  display: flex;
+}
+
+.movie-card-wrapper .movie-card {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-width: 0;
+}
+
+.movie-card-wrapper .movie-info {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+/* Rating selalu rata di bagian bawah kartu */
+.movie-card-wrapper .movie-info p {
+  margin-top: auto;
+  padding-top: 6px;
+}
