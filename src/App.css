@@ -309,3 +309,107 @@ a.movie-card:hover {
 .fav-detail-btn:hover {
   background: #444;
 }
+
+/* Skeleton loading */
+.skeleton-card {
+  background: #1f1f1f;
+  border-radius: 8px;
+  overflow: hidden;
+  padding-bottom: 12px;
+}
+
+.skeleton-poster {
+  aspect-ratio: 2 / 3;
+}
+
+.skeleton-poster,
+.skeleton-line {
+  background: linear-gradient(90deg, #2a2a2a 25%, #383838 50%, #2a2a2a 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.4s infinite linear;
+}
+
+.skeleton-line {
+  height: 14px;
+  margin: 12px 10px 0;
+  border-radius: 4px;
+}
+
+.skeleton-line.short {
+  width: 50%;
+}
+
+@keyframes shimmer {
+  from {
+    background-position: 200% 0;
+  }
+  to {
+    background-position: -200% 0;
+  }
+}
+
+.movie-grid.is-loading {
+  opacity: 0.5;
+  transition: opacity 0.2s;
+}
+
+/* Aksesibilitas: penanda fokus untuk pengguna keyboard */
+:focus-visible {
+  outline: 3px solid #4da3ff;
+  outline-offset: 2px;
+}
+
+/* Hormati pengguna yang mematikan animasi di sistemnya */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation: none !important;
+    transition: none !important;
+  }
+}
+
+/* Responsif: HP */
+@media (max-width: 600px) {
+  .app {
+    padding: 16px 12px;
+  }
+
+  .app h1 {
+    font-size: 24px;
+  }
+
+  .movie-grid {
+    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+    gap: 12px;
+  }
+
+  .controls {
+    flex-direction: column;
+  }
+
+  .controls .search-input {
+    flex: none;
+    width: 100%;
+  }
+
+  .genre-select {
+    width: 100%;
+  }
+
+  .detail {
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .detail-poster {
+    width: 200px;
+    align-self: center;
+  }
+
+  .detail-info {
+    min-width: 0;
+  }
+
+  .detail-info h2 {
+    font-size: 24px;
+  }
+}

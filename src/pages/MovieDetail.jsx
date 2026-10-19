@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Link, useParams } from "react-router-dom";
+import { Link, useLocation, useParams } from "react-router-dom";
 import { useFavorites } from "../context/favoritesContext";
 
 const API_KEY = import.meta.env.VITE_TMDB_API_KEY;
@@ -16,6 +16,8 @@ function formatRuntime(minutes) {
 
 function MovieDetail() {
   const { id } = useParams();
+  const location = useLocation();
+  const backTo = location.state?.from ?? "/";
   const [movie, setMovie] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -54,14 +56,14 @@ function MovieDetail() {
     };
   }, [id]);
 
-  if (loading) return <p className="status">Memuat detail film...</p>;
+  if (loading) return <p className="status" role="status">Memuat detail film...</p>;
 
   if (error) {
     return (
       <div className="app">
         <p className="status error">{error}</p>
         <p className="status">
-          <Link to="/" className="back-link">← Kembali ke daftar film</Link>
+          <Link to={backTo} className="back-link">← Kembali ke daftar film</Link>
         </p>
       </div>
     );
@@ -76,7 +78,7 @@ function MovieDetail() {
 
   return (
     <div className="app">
-      <Link to="/" className="back-link">← Kembali</Link>
+      <Link to={backTo} className="back-link">← Kembali</Link>
 
       <div className="detail">
         {movie.poster_path ? (

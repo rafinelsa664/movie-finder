@@ -1,17 +1,26 @@
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { useFavorites } from "../context/favoritesContext";
 
 const IMG_URL = "https://image.tmdb.org/t/p/w500";
 
 function MovieCard({ movie }) {
   const { isFavorite, toggleFavorite } = useFavorites();
+  const location = useLocation();
   const favorite = isFavorite(movie.id);
 
   return (
     <div className="movie-card-wrapper">
-      <Link className="movie-card" to={`/movie/${movie.id}`}>
+      <Link
+        className="movie-card"
+        to={`/movie/${movie.id}`}
+        state={{ from: location.pathname + location.search }}
+      >
         {movie.poster_path ? (
-          <img src={`${IMG_URL}${movie.poster_path}`} alt={movie.title} />
+          <img
+            src={`${IMG_URL}${movie.poster_path}`}
+            alt={movie.title}
+            loading="lazy"
+          />
         ) : (
           <div className="no-poster">Tidak ada poster</div>
         )}

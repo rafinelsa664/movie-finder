@@ -1,16 +1,32 @@
 import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useSearchParams } from "react-router-dom";
 import MovieCard from "../components/MovieCard";
 import { useFavorites } from "../context/favoritesContext";
 
 const API_KEY = import.meta.env.VITE_TMDB_API_KEY;
 const BASE_URL = "https://api.themoviedb.org/3";
 
+function SkeletonGrid() {
+  return (
+    <div className="movie-grid" aria-hidden="true">
+      {Array.from({ length: 12 }, (_, i) => (
+        <div className="skeleton-card" key={i}>
+          <div className="skeleton-poster" />
+          <div className="skeleton-line" />
+          <div className="skeleton-line short" />
+        </div>
+      ))}
+    </div>
+  );
+}
+
 function Home() {
-  const [query, setQuery] = useState("");
-  const [debouncedQuery, setDebouncedQuery] = useState("");
+  const [searchParams, setSearchParams] = useSearchParams();
+  const urlQuery = searchParams.get("q") ?? "";
+  const genre = searchParams.get("genre") ?? "";
+
+  const [query, setQuery] = useState(urlQuery);
   const [genres, setGenres] = useState([]);
-  const [genre, setGenre] = useState("");
   const [movies, setMovies] = useState([]);
   const [page, setPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
@@ -18,16 +34,26 @@ function Home() {
   const [error, setError] = useState(null);
   const { favorites } = useFavorites();
 
-  // Debounce kata kunci; hasil pencarian baru selalu mulai dari halaman 1
+  // Debounce: 500 ms setelah user berhenti mengetik, simpan kata kunci ke URL
   useEffect(() => {
     const timer = setTimeout(() => {
-      setDebouncedQuery(query.trim());
+      const trimmed = query.trim();
+      if (trimmed === urlQuery) return;
+      setSearchParams(
+        (prev) => {
+          const next = new URLSearchParams(prev);
+          if (trimmed) next.set("q", trimmed);
+          else next.delete("q");
+          return next;
+        },
+        { replace: true }
+      );
       setPage(1);
     }, 500);
     return () => clearTimeout(timer);
-  }, [query]);
+  }, [query, urlQuery, setSearchParams]);
 
-  // Ambil daftar genre sekali saat halaman dibuka
+  // Ambil daftar genre sekali
   useEffect(() => {
     async function fetchGenres() {
       try {
@@ -53,8 +79,8 @@ function Home() {
       setError(null);
       try {
         let url;
-        if (debouncedQuery) {
-          url = `${BASE_URL}/search/movie?api_key=${API_KEY}&query=${encodeURIComponent(debouncedQuery)}&page=${page}`;
+        if (urlQuery) {
+          url = `${BASE_URL}/search/movie?api_key=${API_KEY}&query=${encodeURIComponent(urlQuery)}&page=${page}`;
         } else if (genre) {
           url = `${BASE_URL}/discover/movie?api_key=${API_KEY}&with_genres=${genre}&sort_by=popularity.desc&page=${page}`;
         } else {
@@ -68,7 +94,7 @@ function Home() {
         const data = await res.json();
         if (ignore) return;
 
-        setTotalPages(Math.min(data.total_pages, 500)); // TMDB maksimal 500 halaman
+        setTotalPages(Math.min(data.total_pages, 500));
         setMovies((prev) =>
           page === 1
             ? data.results
@@ -78,7 +104,10 @@ function Home() {
               ]
         );
       } catch (err) {
-        if (!ignore) setError(err.message);
+        if (!ignore) {
+          setError(err.message);
+          if (page === 1) setMovies([]);
+        }
       } finally {
         if (!ignore) setLoading(false);
       }
@@ -88,32 +117,45 @@ function Home() {
     return () => {
       ignore = true;
     };
-  }, [debouncedQuery, genre, page]);
+  }, [urlQuery, genre, page]);
 
   function handleGenreChange(e) {
-    setGenre(e.target.value);
+    const value = e.target.value;
+    setSearchParams(
+      (prev) => {
+        const next = new URLSearchParams(prev);
+        if (value) next.set("genre", value);
+        else next.delete("genre");
+        return next;
+      },
+      { replace: true }
+    );
     setPage(1);
   }
 
   const isSearching = query.trim() !== "";
+  const showSkeleton = loading && movies.length === 0;
 
   return (
     <div className="app">
       <h1>Movie Finder</h1>
+
       <nav className="top-nav">
         <Link to="/favorites">❤️ Favorit ({favorites.length})</Link>
       </nav>
 
-      <div className="controls">
+      <div className="controls" role="search">
         <input
-          type="text"
+          type="search"
           className="search-input"
           placeholder="Cari film..."
+          aria-label="Cari film"
           value={query}
           onChange={(e) => setQuery(e.target.value)}
         />
         <select
           className="genre-select"
+          aria-label="Filter genre"
           value={genre}
           onChange={handleGenreChange}
           disabled={isSearching}
@@ -128,20 +170,27 @@ function Home() {
         </select>
       </div>
 
-      {loading && movies.length === 0 && (
-        <p className="status">Memuat film...</p>
+      {error && (
+        <p className="status error" role="alert">
+          {error}
+        </p>
       )}
-      {error && <p className="status error">{error}</p>}
+
+      {showSkeleton && <SkeletonGrid />}
+
       {!loading && !error && movies.length === 0 && (
-        <p className="status">
-          {debouncedQuery
-            ? `Film "${debouncedQuery}" tidak ditemukan.`
+        <p className="status" role="status">
+          {urlQuery
+            ? `Film "${urlQuery}" tidak ditemukan.`
             : "Tidak ada film ditemukan."}
         </p>
       )}
 
       {movies.length > 0 && (
-        <div className="movie-grid">
+        <div
+          className={`movie-grid${loading ? " is-loading" : ""}`}
+          aria-busy={loading}
+        >
           {movies.map((movie) => (
             <MovieCard key={movie.id} movie={movie} />
           ))}
