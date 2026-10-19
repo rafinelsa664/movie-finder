@@ -25,3 +25,7 @@ dist-ssr
 
 # Environment variables
 .env
+
+# Windows
+desktop.ini
+Thumbs.db
