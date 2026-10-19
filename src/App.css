@@ -475,3 +475,140 @@ a.movie-card:hover {
   margin-top: auto;
   padding-top: 6px;
 }
+
+/* ===== Tema visual ===== */
+:root {
+  --accent: #7c3aed;
+  --accent-soft: #a78bfa;
+  --card: #1c1c26;
+}
+
+body {
+  background:
+    radial-gradient(circle at 15% 0%, rgba(124, 58, 237, 0.25), transparent 40%),
+    radial-gradient(circle at 85% 10%, rgba(236, 72, 153, 0.18), transparent 40%),
+    #0f0f16;
+  background-attachment: fixed;
+  min-height: 100vh;
+}
+
+/* Judul dengan garis aksen di bawahnya */
+.app h1 {
+  font-size: clamp(28px, 5vw, 44px);
+  color: #fff;
+  letter-spacing: 0.5px;
+}
+
+.app h1::after {
+  content: "";
+  display: block;
+  width: 64px;
+  height: 4px;
+  margin: 10px auto 0;
+  border-radius: 999px;
+  background: linear-gradient(90deg, #7c3aed, #ec4899);
+}
+
+/* Kartu film */
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.movie-card-wrapper {
+  animation: fadeUp 0.4s ease both;
+}
+
+.movie-card {
+  background: var(--card);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.35);
+  transition: transform 0.2s ease, box-shadow 0.2s ease,
+    border-color 0.2s ease;
+}
+
+a.movie-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 12px 28px rgba(124, 58, 237, 0.35);
+  border-color: rgba(167, 139, 250, 0.5);
+}
+
+.movie-card img {
+  transition: transform 0.35s ease;
+}
+
+a.movie-card:hover img {
+  transform: scale(1.05);
+}
+
+/* Tombol hati */
+.fav-btn {
+  transition: transform 0.15s ease, background 0.15s ease;
+}
+
+.fav-btn:hover {
+  transform: scale(1.15);
+}
+
+/* Kotak pencarian dan dropdown */
+.search-input,
+.genre-select {
+  background: var(--card);
+  border: 1px solid #3a3a4d;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.search-input:focus,
+.genre-select:focus {
+  border-color: var(--accent-soft);
+  box-shadow: 0 0 0 3px rgba(124, 58, 237, 0.35);
+}
+
+/* Tautan Favorit sebagai tombol bulat */
+.top-nav a {
+  display: inline-block;
+  padding: 8px 18px;
+  color: #e9d5ff;
+  background: rgba(124, 58, 237, 0.2);
+  border: 1px solid rgba(167, 139, 250, 0.4);
+  border-radius: 999px;
+  transition: background 0.2s ease, color 0.2s ease;
+}
+
+.top-nav a:hover {
+  background: var(--accent);
+  color: #fff;
+}
+
+/* Tombol Muat lebih banyak dan Favorit di detail */
+.load-more,
+.fav-detail-btn {
+  color: #fff;
+  font-weight: 600;
+  background: var(--accent);
+  border: 1px solid var(--accent);
+  transition: background 0.2s ease, transform 0.2s ease;
+}
+
+.load-more:hover:not(:disabled),
+.fav-detail-btn:hover {
+  background: #6d28d9;
+  transform: translateY(-2px);
+}
+
+/* Halaman detail */
+.detail-poster {
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.5);
+}
+
+.genre-tags span {
+  color: #e9d5ff;
+  background: rgba(124, 58, 237, 0.25);
+  border: 1px solid rgba(167, 139, 250, 0.35);
+}
